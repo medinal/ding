@@ -17,7 +17,13 @@ function create(req, res){
   })
 };
 
+function remove(req, res){
+
+};
+
+
 module.exports = {
-  all, all,
-  create: create
+  all: all,
+  create: create,
+  remove: remove
 };

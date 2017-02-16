@@ -36,6 +36,7 @@ app.delete('/courses/:courseId', controllers.course.remove);
 //User Routes
 app.get('/users', controllers.user.all);
 app.post('/users', controllers.user.create);
+app.delete('/users/:userId', controllers.user.remove);
 
 //Enroll Routes
 app.get('/enrolls', controllers.enroll.all);
