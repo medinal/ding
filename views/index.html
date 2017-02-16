@@ -5,6 +5,7 @@
     <title>Ding!</title>
 
     <!-- stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Shadows+Into+Light" rel="stylesheet">
     <link rel="stylesheet" href="./bootstrap.css">
     <link rel="stylesheet" href="styles/style.css">
 
@@ -16,36 +17,58 @@
   </head>
   <body>
 
-    <div class="container-fluid page-header">
+    <div class="container-fluid jumbotron page-header">
       <h1>Ding! <small>how you level up</small></h1>
+      <button type="button" class="add-btn btn btn-lg btn-warning" name="" data-toggle="modal" data-target="#add-edit-modal">Add A Class</button>
+    </div>
+    <div class="modal" id="add-edit-modal" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add / Edit Course</h4>
+          </div>
+          <form class="modal-form" action="index.html" method="post">
+            <input type="text" name="className" value="" placeholder="course name">
+            <input type="text" name="teacherName" value="" placeholder="teacher name">
+            <input type="text" name="description" value="" placeholder="description">
+            <hr>
+            <input class="btn btn-lg btn-success" type="submit" name="submit" value="Submit your Course!">
+          </form>
+
+        </div>
+
+      </div>
     </div>
 
+
+    <!-- All the Class Lists -->
     <div id="main-panel" class="container-fluid panel">
       <h2>All Courses</h2>
-      <div class="all-courses-list container-fluid panel">
-
+      <div class="all-courses container-fluid panel">
+        <!-- List of all classes prepended here -->
       </div>
 
       <h2>Courses Teaching</h2>
-      <div class="teach-course-list container-fluid panel">
-
+      <div class="teach-courses container-fluid panel">
+        <!-- List of classes taught prepended here -->
       </div>
 
       <h2>Courses Available</h2>
-      <div class="available-course-list container-fluid panel">
-
+      <div class="available-courses container-fluid panel">
+        <!-- List of classes available prepended here -->
       </div>
 
       <h2>Courses Enrolled</h2>
-      <div class="enrolled-course-list container-fluid panel">
-
+      <div class="enrolled-courses container-fluid panel">
+        <!-- List of classes enrolled in prepended here -->
       </div>
 
     </div>
 
+
+    <!-- Page Footer -->
     <footer class="container">
       <p>© 2017 Medina Kaspar Inc.</p>
     </footer>
-
   </body>
 </html>
