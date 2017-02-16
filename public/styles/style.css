@@ -1,16 +1,71 @@
 body {                    /*sanity check*/
-  background: lightgreen;
+  background: #968a6c;
 }
 
-div {
-  max-width: 80%;
+h1, h2 {
+  font-family: 'Pacifico', sans-serif;
+  text-shadow: 2px 1px white;
+}
+
+h1 small {
+  font-family: Arial, sans-serif;
+  text-shadow: 2px 1px black;
+}
+
+h3 {
+  margin-left: 75px;
+  display: inline-block;
+  font-family: 'Shadows Into Light', sans-serif;
+}
+
+button {
+  display: inline;
+  box-shadow: 2px 2px black;
 }
 
 footer {
-  color: white;
-  background-color: darkgreen;
+  background-color: lightgreen;
   max-width: 75%;
   border-radius: 10px;
   text-align: center;
   padding-top: 10px;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px black;
+}
+
+.course-panel {
+  background: skyblue;
+  border-radius: 10px;
+  box-shadow: 2px 2px black;
+  margin: 10px;
+  padding: 20px;
+}
+
+.enroll-button {
+  float: left;
+}
+
+.btn-group, .add-btn {
+  color: black;
+  float: right;
+}
+
+.course-panel p {
+  margin-left: 40%;
+}
+
+.all-courses, .teach-courses,
+.available-courses, .enrolled-courses {
+  background: none;
+
+}
+
+.modal-form {
+  margin: 10px;
+  padding: 10px;
+}
+
+#main-panel {
+  background-image: url('/images/paper.png');
+  max-width: 90%;
 }
