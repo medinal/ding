@@ -27,7 +27,7 @@ function edit(req, res){
                   teacherId: req.body.teacherId,
                   description: req.body.description,
                   capacity: req.body.capacity};
-  db.Course.findByIdAndUpdate(courseId, newCourse, function(err, course){
+  db.Course.findByIdAndUpdate(courseId, newCourse, {new: true}, function(err, course){
     if(err){console.log(err);}
     res.json(course);
   })
@@ -36,7 +36,7 @@ function edit(req, res){
 function remove(req, res){
   var courseId = req.params.id;
   db.Course.findByIdAndRemove(courseId, function(err, course){
-    if(err){console.log(er);}
+    if(err){console.log(err);}
     res.json(course);
   })
 };
@@ -45,5 +45,5 @@ module.exports = {
   all: all,
   create: create,
   edit: edit,
-  delete: remove
+  remove: remove
 };
