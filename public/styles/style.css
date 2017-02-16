@@ -1,0 +1,16 @@
+body {                    /*sanity check*/
+  background: lightgreen;
+}
+
+div {
+  max-width: 80%;
+}
+
+footer {
+  color: white;
+  background-color: darkgreen;
+  max-width: 75%;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 10px;
+}
