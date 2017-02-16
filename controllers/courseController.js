@@ -10,7 +10,7 @@ function all(req, res){
 
 function create(req, res){
   var newCourse = {name: req.body.name,
-                  teacher: req.params.userId
+                  teacher: req.params.userId,
                   description: req.body.description,
                   capacity: req.body.capacity};
   db.Course.create(newCourse, function(err, course){
