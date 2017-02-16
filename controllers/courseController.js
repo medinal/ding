@@ -2,9 +2,11 @@ var db = require("../models");
 
 //Get all courses
 function all(req, res){
-  db.Course.find({}, function(err, course){
-    if(err){console.log(err);}
-    res.json(course);
+  db.Course.find({})
+    .populate('teacher')
+    .exec(function(err, courses){
+      if(err){console.log(err);}
+      res.json(courses);
   })
 };
 
@@ -15,7 +17,12 @@ function create(req, res){
                   capacity: req.body.capacity};
   db.Course.create(newCourse, function(err, course){
     if(err){console.log(err);}
-    res.json(course);
+    db.Course.findById(course._id)
+      .populate('teacher')
+      .exec(function(err, course){
+        if(err){console.log(err);}
+        res.json(course);
+      })
   })
 };
 
@@ -26,7 +33,12 @@ function edit(req, res){
                   capacity: req.body.capacity};
   db.Course.findByIdAndUpdate(courseId, updatedCourse, {new: true}, function(err, course){
     if(err){console.log(err);}
-    res.json(course);
+    db.Course.findById(course._id)
+      .populate('teacher')
+      .exec(function(err, course){
+        if(err){console.log(err);}
+        res.json(course);
+      })
   })
 };
 

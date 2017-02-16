@@ -37,6 +37,13 @@ app.delete('/courses/:id', controllers.course.remove);
 app.get('/users', controllers.user.all);
 app.post('/users', controllers.user.create);
 
+//Enroll Routes
+app.get('/enrolls', controllers.enroll.all);
+app.post('/enrolls/:userId/:courseId', controllers.enroll.create);
+app.delete('/enrolls/:userId/:courseId', controllers.enroll.unenroll);
+app.delete('/enrolls/:courseId', controllers.enroll.removeCourse);
+app.delete('/enrolls/single/:enrollId', controllers.enroll.removeEnroll);
+
 app.listen(process.env.PORT || 3000, function () {
    console.log('Express server is up and running on http://localhost:3000/');
 });
