@@ -2,12 +2,14 @@ body {                    /*sanity check*/
   background: #968a6c;
 }
 
+
 h1, h2 {
   font-family: 'Pacifico', sans-serif;
   text-shadow: 2px 1px white;
 }
 
 h1 small {
+  font-size: 0.5em;
   font-family: Arial, sans-serif;
   text-shadow: 2px 1px black;
 }
@@ -31,6 +33,10 @@ footer {
   padding-top: 10px;
   margin-bottom: 10px;
   box-shadow: 2px 2px black;
+}
+
+.page-header {
+  background-color: black;
 }
 
 .course-panel {

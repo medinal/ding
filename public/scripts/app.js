@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
-
+  // jQuery Variables
   var allCourses = $('.all-courses');
   var teachCourses = $('.teach-courses');
   var availableCourses = $('.available-courses');
@@ -19,23 +19,18 @@ $(document).ready(function(){
     error: onError
   })
 
-
-
-
-
-
-
 });
 
+// Runs on successful ajax call
 var onSuccess = function(res){
   console.log('good job, ajax!');
   console.log(res);
 }
-
+// Runs on erronous ajax call
 var onError = function(){
   console.log('try again, ajax');
 }
-
+// Renders courses to 'views/index.html'
 var renderCourse = function(res, div){
   $(div).prepend(`
     <hr>
