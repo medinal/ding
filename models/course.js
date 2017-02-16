@@ -5,7 +5,10 @@ var User = require('./user.js');
 
 var CourseSchema = new Schema({
   name: String,
-  teacher: User.schema,
+  teacher: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
   description: String,
   capacity: Number
 });
