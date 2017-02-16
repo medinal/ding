@@ -43,10 +43,17 @@ function edit(req, res){
 };
 
 function remove(req, res){
-  var courseId = req.params.id;
-  db.Course.findByIdAndRemove(courseId, function(err, course){
-    if(err){console.log(err);}
-    res.json(course);
+  var courseId = req.params.courseId;
+  db.Enroll.find({course: {_id: courseId}}, function(err, enrollment){
+    enrollment.forEach(function(enrollValue){
+      db.Enroll.findByIdAndRemove(enrollValue._id, function(err, unenroll){
+        if(err){console.log(err);}
+        })
+      })
+      db.Course.findByIdAndRemove(courseId, function(err, course){
+        if(err){console.log(err);}
+        res.json(course);
+    })
   })
 };
 

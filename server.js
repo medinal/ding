@@ -31,7 +31,7 @@ app.get('/', function homepage(req, res) {
 app.get('/courses', controllers.course.all);
 app.post('/courses/:userId', controllers.course.create);
 app.put('/courses/:courseId', controllers.course.edit);
-app.delete('/courses/:id', controllers.course.remove);
+app.delete('/courses/:courseId', controllers.course.remove);
 
 //User Routes
 app.get('/users', controllers.user.all);
