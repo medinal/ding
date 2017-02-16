@@ -10,8 +10,7 @@ function all(req, res){
 
 function create(req, res){
   var newCourse = {name: req.body.name,
-                  teacherName: req.body.teacherName,
-                  teacherId: req.body.teacherId,
+                  teacher: req.params.userId
                   description: req.body.description,
                   capacity: req.body.capacity};
   db.Course.create(newCourse, function(err, course){
@@ -21,13 +20,11 @@ function create(req, res){
 };
 
 function edit(req, res){
-  var courseId = req.params.id;
-  var newCourse = {name: req.body.name,
-                  teacherName: req.body.teacherName,
-                  teacherId: req.body.teacherId,
+  var courseId = req.params.courseId;
+  var updatedCourse = {name: req.body.name,
                   description: req.body.description,
                   capacity: req.body.capacity};
-  db.Course.findByIdAndUpdate(courseId, newCourse, {new: true}, function(err, course){
+  db.Course.findByIdAndUpdate(courseId, updatedCourse, {new: true}, function(err, course){
     if(err){console.log(err);}
     res.json(course);
   })
