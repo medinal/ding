@@ -2,52 +2,64 @@
 
 var db = require("./models");
 
-var courseList =[];
+var userList = [{name: "Logan"},{name: "Will"}];
+
+var courseList = [];
 
 courseList.push({
   name: "Competitive Knitting",
-  teacherName: "Professor Professorson",
   description: "Learn to use your knitting needles for combat.",
+  teacher: "Logan",
   capacity: 10
 });
 
 courseList.push({
   name: "Ladders",
-  teacherName: "Professor Cheng",
   description: "Climb up, climb down.",
+  teacher: "Logan",
   capacity: 5
 });
 
 courseList.push({
   name: "Introduction to Collaborative Passive Aggression",
-  teacherName: "Michelle",
   description: "You know what you did.",
+  teacher: "Will",
   capacity: 25
 });
 
 courseList.push({
   name: "Faking It, Until You Make It",
-  teacherName: "Logan",
   description: "We don't know what we're doing, either.",
+  teacher: "Will",
   capacity: 18
 });
 
 courseList.push({
   name: "Underwater Sleeping",
-  teacherName: "Vito Corleone",
   description: "We'll make you an offer you can't refuse.",
+  teacher: "Will",
   capacity: 13
 });
 
 
-
 db.Course.remove({}, function(err, courses){
-  // code in here runs after all classes are removed
-  db.Course.create(courseList, function(err, courses){
-    // code in here runs after all classes are created
-    if (err) { return console.log('ERROR', err); }
-    console.log("all courses:", courses);
-    console.log("created", courses.length, "courses");
-    process.exit();
-  });
+  db.User.remove({}, function(err, courses){
+    db.User.create(userList, function(err, users){
+      courseList.forEach(function(courseData){
+        var course = new db.Course({
+          name: courseData.name,
+          description: courseData.description,
+          capacity: courseData.capacity
+        });
+        db.User.findOne({name: courseData.teacher}, function (err, foundUser){
+          if(err){return console.log(err);}
+          course.teacher = foundUser;
+          course.save(function(err, savedCourse){
+            if(err){return console.log(err);}
+            return console.log('completed')
+          })
+        })
+      })
+    })
+  })
 });

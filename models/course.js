@@ -1,10 +1,14 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
+var User = require('./user.js');
+
 var CourseSchema = new Schema({
   name: String,
-  teacherName: String,
-  teacherId: String,
+  teacher: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
   description: String,
   capacity: Number
 });
