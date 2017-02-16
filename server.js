@@ -16,6 +16,7 @@ app.use(function(req, res, next) {
 var mongoose = require('mongoose');
 
 app.use(express.static('public'));
+app.use(express.static('vendor'));
 
 var db = require('./models');
 
