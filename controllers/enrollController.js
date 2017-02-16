@@ -9,6 +9,7 @@ function all(req, res){
     })
 };
 
+//create a new enrollment instance for a student in a specific course
 function create(req, res){
   var newEnrollment = {course: req.params.courseId,
                       user: req.params.userId};
@@ -23,6 +24,7 @@ function create(req, res){
   })
 };
 
+//un-enroll a student from a course by student id and course id
 function unenroll(req, res){
   db.Enroll.find({user: {_id: req.params.userId}, course: {_id: req.params.courseId}}, function(err, enrollment){
     db.Enroll.findByIdAndRemove(enrollment[0]._id, function(err, unenroll){
@@ -32,6 +34,7 @@ function unenroll(req, res){
   })
 }
 
+//remove all enrollments for a course by course id
 function removeCourse(req, res){
   db.Enroll.remove({course: { _id: req.params.courseId}})
           .exec(function(err, unenroll){
@@ -40,6 +43,7 @@ function removeCourse(req, res){
   })
 }
 
+//remove a single enrollment by id
 function removeEnroll(req, res){
   db.Enroll.findByIdAndRemove(req.params.enrollId, function(err, enroll){
     if(err){console.log(err);}

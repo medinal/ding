@@ -10,6 +10,7 @@ function all(req, res){
   })
 };
 
+//create a new course and populate it with a teacher
 function create(req, res){
   var newCourse = {name: req.body.name,
                   teacher: req.params.userId,
@@ -26,6 +27,7 @@ function create(req, res){
   })
 };
 
+//edit a previously existing course. Can only edit name, description and capacity.
 function edit(req, res){
   var courseId = req.params.courseId;
   var updatedCourse = {name: req.body.name,
@@ -42,6 +44,7 @@ function edit(req, res){
   })
 };
 
+//remove a course from the courses database and remove all enrollments that exist for that course.
 function remove(req, res){
   var courseId = req.params.courseId;
   db.Enroll.find({course: {_id: courseId}}, function(err, enrollment){
