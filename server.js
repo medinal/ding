@@ -33,6 +33,10 @@ app.post('/courses', controllers.course.create);
 app.put('/courses/:id', controllers.course.edit);
 app.delete('/courses/:id', controllers.course.remove);
 
+//User Routes
+app.get('/users', controllers.user.all);
+app.post('/users', controllers.user.create);
+
 app.listen(process.env.PORT || 3000, function () {
    console.log('Express server is up and running on http://localhost:3000/');
 });
