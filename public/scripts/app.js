@@ -17,14 +17,21 @@ $(document).ready(function(){
   var $enrolledCourses = $('.enrolled-courses');
 
 
-
-  $('.user-dropdown').on('click', '.dropdown-item', function(){
+  // Dropdown Event Listener
+  $('.user-dropdown').on('click', '.dropdown-item', function(e){
     teachArr = [];
     $('.courses').empty();
     $currentId = $(this).attr('data-id');
     allCoursesArr.filter(Teaching);
     renderCoursesByUser(teachArr);
   });
+
+  //
+  var enrollInClass = function(){
+    $('#main-panel').on('click', 'enroll-btn', function(e){
+
+    });
+  }
 
   // USER LIST AJAX
   $.ajax({
@@ -114,7 +121,7 @@ var renderCourse = function(res, div){
     <hr>
     <div class="course-panel container-fluid">
         <div class="course-title clearfix">
-          <button class="btn btn-lg btn-danger" type="button" name="enroll">Enroll me</button>
+          <button class="enroll-btn btn btn-lg btn-danger" type="button" name="enroll" data-id="${res._id}">Enroll me</button>
           <h3>${res.name}</h3>
           <br>
           <p><strong>Taught by:</strong>  ${res.teacher.name}</p>
@@ -122,8 +129,8 @@ var renderCourse = function(res, div){
           <p><strong>Capacity:</strong>  ${res.capacity}</p>
         </div>
         <div class="btn-group class-btn-group">
-          <button type="button" class="edit-btn btn btn-default btn-md" dataId=''>edit</button>
-          <button type="button" class="trash-btn btn btn-default btn-md" dataId=''>trash</button>
+          <button type="button" class="edit-btn btn btn-default btn-md" dataId='${res._id}'>edit</button>
+          <button type="button" class="trash-btn btn btn-default btn-md" dataId='${res._id}'>trash</button>
         </div>
     </div>
     `);
