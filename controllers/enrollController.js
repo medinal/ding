@@ -25,8 +25,8 @@ function allOne(req, res){
 
 //create a new enrollment instance for a student in a specific course
 function create(req, res){
-  var newEnrollment = {course: req.params.courseId,
-                      user: req.params.userId};
+  var newEnrollment = {course: req.body.courseId,
+                      user: req.body.userId};
   db.Enroll.create(newEnrollment, function(err, enroll){
     if(err){console.log(err);}
     db.Enroll.findById(enroll._id)
@@ -40,20 +40,11 @@ function create(req, res){
 
 //un-enroll a student from a course by student id and course id
 function unenroll(req, res){
-  db.Enroll.find({user: {_id: req.params.userId}, course: {_id: req.params.courseId}}, function(err, enrollment){
+  db.Enroll.find({user: {_id: req.body.userId}, course: {_id: req.body.courseId}}, function(err, enrollment){
     db.Enroll.findByIdAndRemove(enrollment[0]._id, function(err, unenroll){
       if(err){console.log(err);}
       res.json(unenroll);
     })
-  })
-}
-
-//remove all enrollments for a course by course id
-function removeCourse(req, res){
-  db.Enroll.remove({course: { _id: req.params.courseId}})
-          .exec(function(err, unenroll){
-              if(err){console.log(err);}
-              res.json(unenroll)
   })
 }
 
@@ -67,9 +58,8 @@ function removeEnroll(req, res){
 
 module.exports = {
   all: all,
+  allOne: allOne,
   create: create,
   unenroll: unenroll,
-  removeCourse: removeCourse,
-  removeEnroll: removeEnroll,
-  allOne: allOne
+  removeEnroll: removeEnroll
 };
