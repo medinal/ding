@@ -33,6 +33,7 @@ $(document).ready(function(){
     renderCoursesByUser(availableArr);
   }
 
+  // Enroll Button Event Listener
   $('#main-panel').on('click', '.enroll-btn', function(e){
     $.ajax({
       method: "POST",
