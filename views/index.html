@@ -18,9 +18,24 @@
   <body>
 
     <div class="container-fluid jumbotron page-header">
+      <!-- Page Heading -->
       <h1>Ding! <small>how you level up</small></h1>
-      <button type="button" class="add-btn btn btn-lg btn-warning" name="" data-toggle="modal" data-target="#add-edit-modal">Add A Class</button>
+      <br>
+
+      <!-- Add Class Button -->
+      <button type="button" style="color: black" class="add-btn btn btn-lg btn-warning" name="" data-toggle="modal" data-target="#add-edit-modal">Add A Class</button>
+
+      <!-- User Dropdown Menu -->
+      <div class="btn-group">
+        <button style="color: black" class="user-btn btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" type="button" name="button">Change User</button>
+        <div class="dropdown-menu user-dropdown">          
+        </div>
+      </div>
+
+
     </div>
+
+    <!-- Add Class Modal -->
     <div class="modal" id="add-edit-modal" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
