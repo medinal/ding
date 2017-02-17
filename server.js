@@ -27,21 +27,42 @@ app.get('/', function homepage(req, res) {
    res.sendFile(__dirname + '/views/index.html');
 });
 
-//Course Routes
+//***************
+//*Course Routes*
+//***************
+
+//get all courses
 app.get('/courses', controllers.course.all);
 app.post('/courses', controllers.course.create);
 app.put('/courses', controllers.course.edit);
 app.delete('/courses', controllers.course.remove);
 
-//User Routes
+
+//***************
+//*User Routes*
+//***************
+
+//get all user data
 app.get('/users', controllers.user.all);
+//create a new user
 app.post('/users', controllers.user.create);
 
-//Enroll Routes
+
+//***************
+//*Enroll Routes*
+//***************
+
+//get all enrollment for every user
 app.get('/enrolls', controllers.enroll.all);
 app.post('/enrolls', controllers.enroll.create);
 app.delete('/enrolls', controllers.enroll.unenroll);
 app.delete('/enrolls/single/:enrollId', controllers.enroll.removeEnroll);
+
+
+//************************
+//*Setup Server to Listen*
+//************************
+
 
 app.listen(process.env.PORT || 3000, function () {
    console.log('Express server is up and running on http://localhost:3000/');
