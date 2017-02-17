@@ -29,9 +29,9 @@ app.get('/', function homepage(req, res) {
 
 //Course Routes
 app.get('/courses', controllers.course.all);
-app.post('/courses/:userId', controllers.course.create);
-app.put('/courses/:courseId', controllers.course.edit);
-app.delete('/courses/:courseId', controllers.course.remove);
+app.post('/courses', controllers.course.create);
+app.put('/courses', controllers.course.edit);
+app.delete('/courses', controllers.course.remove);
 
 //User Routes
 app.get('/users', controllers.user.all);
@@ -39,9 +39,8 @@ app.post('/users', controllers.user.create);
 
 //Enroll Routes
 app.get('/enrolls', controllers.enroll.all);
-app.post('/enrolls/:userId/:courseId', controllers.enroll.create);
-app.delete('/enrolls/:userId/:courseId', controllers.enroll.unenroll);
-app.delete('/enrolls/:courseId', controllers.enroll.removeCourse);
+app.post('/enrolls', controllers.enroll.create);
+app.delete('/enrolls', controllers.enroll.unenroll);
 app.delete('/enrolls/single/:enrollId', controllers.enroll.removeEnroll);
 
 app.listen(process.env.PORT || 3000, function () {
