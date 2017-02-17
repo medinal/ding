@@ -33,9 +33,17 @@ $(document).ready(function(){
     renderCoursesByUser(availableArr);
   }
 
+  $('#main-panel').on('click', '.enroll-btn', function(e){
+    $.ajax({
+      method: "POST",
+      url: "/enrolls/:userId/:courseId",
+      success: onSuccess,
+      error: onError
+    })
+  })
 
   // Dropdown Event Listener
-  $('.user-dropdown').on('click', '.dropdown-item', function(){
+  $('.user-dropdown').on('click', '.dropdown-item', function(e){
     $('.courses').empty();
     $currentId = $(this).attr('data-id');
     showTeaching();
