@@ -6,6 +6,7 @@ body {                    /*sanity check*/
 h1, h2 {
   font-family: 'Pacifico', sans-serif;
   text-shadow: 2px 1px white;
+  margin-left: 10%;
 }
 
 h1 small {
@@ -21,6 +22,7 @@ h3 {
 }
 
 button {
+  color: black;
   display: inline;
   box-shadow: 2px 2px black;
 }
@@ -48,11 +50,17 @@ footer {
 }
 
 .enroll-button {
+  color: white;
   float: left;
 }
 
-.btn-group, .add-btn {
-  color: black;
+.dropdown-item {
+  margin-left: 50px;
+  padding: 2px;
+  display: block;
+}
+
+.class-btn-group, .add-btn {
   float: right;
 }
 
