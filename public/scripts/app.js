@@ -1,53 +1,88 @@
-var $currentId;
+// Shit we need
+var $currentId = 0;
 
+// Arrays populated on Ajax response.
+var allCoursesArr = [];
+var teachArr = [];
+var enrollArr = [];
+var availableArr = [];
+
+// DON'T LEAVE GLOBALS (if you can help it)
 
 $(document).ready(function(){
   // jQuery Variables
-  var allCourses = $('.all-courses');
-  var teachCourses = $('.teach-courses');
-  var availableCourses = $('.available-courses');
-  var enrolledCourses = $('.enrolled-courses');
+  var $allCourses = $('.all-courses');
+  var $teachCourses = $('.teach-courses');
+  var $availableCourses = $('.available-courses');
+  var $enrolledCourses = $('.enrolled-courses');
 
+
+
+  $('.user-dropdown').on('click', '.dropdown-item', function(){
+    teachArr = [];
+    $('.courses').empty();
+    $currentId = $(this).attr('data-id');
+    allCoursesArr.filter(Teaching);
+    renderCoursesByUser(teachArr);
+  });
 
   // USER LIST AJAX
   $.ajax({
     method: "GET",
     url: "/users",
     success: function(res){
-      onSuccess(res);
+      //onSuccess(res);
       res.forEach(function RenderAllUsers(user){
         renderUser(user);
       });
     }
   }); // closes '/users' ajax
 
-  // CLASS LIST AJAX
+  // COURSE LIST AJAX
   $.ajax({
     method: "GET",
     url: "/courses",
     success: function(res){
+        //onSuccess(res);
         res.forEach(function RenderAllCourses(course){
-          renderCourse(course, allCourses);
+          allCoursesArr.push(course);
+          renderCourse(course, $allCourses);
         });
-        res.forEach(function RenderCoursesTeaching(course){
-          filterByTeacher();
-          //renderCourse(course, teachCourses);
-        })
-    },
+        renderCoursesByUser();
+      },
     error: onError
   }); // closes '/courses' ajax
 
+  $.ajax({
+    method: "GET",
+    url: "/enrolls",
+    success: function(res){
+      onSuccess(res);
+    },
+    error: onError
+  }); // closes '/enrolls' ajax
 
-  // TODO : FILTER COURSES BY TEACHER
-  var filterByUser = function(){
-    $currentId = $(this).attr('data-id');
-    console.log('currentId: ', $currentId);
-    if($currentId === res.teacher._id){
-      console.log(res.name);
-      //renderCourse(course, teachCourses);
+
+  // Sorts 'Courses' by user for 'Courses Teaching'
+  function Teaching(course){
+    if(course.teacher._id == $currentId){
+      teachArr.push(course);
     }
-  }
-  $('.user-dropdown').on('click', '.dropdown-item', filterByUser);
+  };
+
+  // filters ALL COURSES to populate other course lists
+  var renderCoursesByUser = function(arr){
+    if ($currentId === 0){
+      renderDefault($teachCourses);
+      renderDefault($availableCourses);
+      renderDefault($enrolledCourses);
+    } else {
+      $('.courses').empty();
+      arr.forEach(function(course){
+        renderCourse(course, $teachCourses);
+      });
+    }
+  };
 
 
 });  // closes (document).ready()
@@ -91,5 +126,14 @@ var renderCourse = function(res, div){
           <button type="button" class="trash-btn btn btn-default btn-md" dataId=''>trash</button>
         </div>
     </div>
+    `);
+}
+
+// Renders default HTML panel for empty course lists
+var renderDefault = function(div){
+  $(div).prepend(`
+    <hr>
+    <div class="default-panel container-fluid">
+      <h3>Any future applicable classes will appear here!<h3>
     `);
 }
