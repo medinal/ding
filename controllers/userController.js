@@ -18,6 +18,6 @@ function create(req, res){
 };
 
 module.exports = {
-  all, all,
+  all: all,
   create: create
 };

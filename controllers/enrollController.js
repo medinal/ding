@@ -9,6 +9,20 @@ function all(req, res){
     })
 };
 
+//get all of a single students enrollments
+function allOne(req, res){
+  db.Enroll.find({user:{_id: req.params.userId}})
+    .populate('user')
+    .populate({
+      path: 'course',
+      populate: {path: 'teacher'}
+  })
+    .exec(function(err, enrolled){
+      if(err){console.log(err);}
+      res.json(enrolled);
+    })
+  }
+
 //create a new enrollment instance for a student in a specific course
 function create(req, res){
   var newEnrollment = {course: req.params.courseId,
@@ -56,5 +70,6 @@ module.exports = {
   create: create,
   unenroll: unenroll,
   removeCourse: removeCourse,
-  removeEnroll: removeEnroll
+  removeEnroll: removeEnroll,
+  allOne: allOne
 };
