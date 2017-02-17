@@ -27,22 +27,42 @@ app.get('/', function homepage(req, res) {
    res.sendFile(__dirname + '/views/index.html');
 });
 
-//Course Routes
-app.get('/courses', controllers.course.all);
-app.post('/courses/:userId', controllers.course.create);
-app.put('/courses/:courseId', controllers.course.edit);
-app.delete('/courses/:courseId', controllers.course.remove);
+//***************
+//*Course Routes*
+//***************
 
-//User Routes
+//get all courses
+app.get('/courses', controllers.course.all);
+app.post('/courses', controllers.course.create);
+app.put('/courses', controllers.course.edit);
+app.delete('/courses', controllers.course.remove);
+
+
+//***************
+//*User Routes*
+//***************
+
+//get all user data
 app.get('/users', controllers.user.all);
+//create a new user
 app.post('/users', controllers.user.create);
 
-//Enroll Routes
+
+//***************
+//*Enroll Routes*
+//***************
+
+//get all enrollment for every user
 app.get('/enrolls', controllers.enroll.all);
-app.post('/enrolls/:userId/:courseId', controllers.enroll.create);
-app.delete('/enrolls/:userId/:courseId', controllers.enroll.unenroll);
-app.delete('/enrolls/:courseId', controllers.enroll.removeCourse);
+app.post('/enrolls', controllers.enroll.create);
+app.delete('/enrolls', controllers.enroll.unenroll);
 app.delete('/enrolls/single/:enrollId', controllers.enroll.removeEnroll);
+
+
+//************************
+//*Setup Server to Listen*
+//************************
+
 
 app.listen(process.env.PORT || 3000, function () {
    console.log('Express server is up and running on http://localhost:3000/');
