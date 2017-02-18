@@ -82,40 +82,33 @@ function populateData(){
 }
 
 function renderOne(course){
-  var innerHTML =
-    `<hr>
-    <div class="course-panel container-fluid">
-      <div class="course-title clearfix">
-        <button class="${hiddenEnroll} enroll-btn btn btn-lg btn-danger" type="button" name="enroll" data-id="${course._id}">Enroll me</button>
-        <button class="${hiddenUnenroll} unenroll-btn btn btn-lg btn-danger" type="button" name="unenroll" data-id="${course._id}">Unenroll me</button>
-        <h3>${course.name}</h3>
-        <br>
-        <p><strong>Taught by:</strong>  ${course.teacher.name}</p>
-        <p><strong>Description:</strong>  ${course.description}</p>
-        <p><strong>Capacity:</strong>  ${course.capacity}</p>
-      </div>
-        <div class="btn-group class-btn-group">
-        <button type="button" class="${hiddenEdit} edit-btn btn btn-default btn-md" dataId='${course._id}'>edit</button>
-        <button type="button" class="${hiddenTrash} trash-btn btn btn-default btn-md" dataId='${course._id}'>trash</button>
-      </div>
-    </div>`
-  var hiddenEnroll;
-  var hiddenUnenroll;
-  var hiddenEdit;
-  var hiddenTrash;
+  var part1 = `<hr>
+              <div class="course-panel container-fluid">
+              <div class="course-title clearfix">
+              <div>`;
+  var enrollBtn = `<button class="enroll-btn btn btn-lg btn-danger" type="button" name="enroll" data-id="${course._id}">Enroll me</button>`;
+  var unenrollBtn = `<button class="unenroll-btn btn btn-lg btn-danger" type="button" name="unenroll" data-id="${course._id}">Unenroll me</button>`;
+  var part2 = `<h3>${course.name}</h3>
+              <br>
+              <p><strong>Taught by:</strong>  ${course.teacher.name}</p>
+              <p><strong>Description:</strong>  ${course.description}</p>
+              <p><strong>Capacity:</strong>  ${course.capacity}</p>
+              </div>
+              <div class="btn-group class-btn-group">`;
+  var teacherBtn = `<button type="button" class="edit-btn btn btn-default btn-md" dataId='${course._id}'>edit</button>
+                    <button type="button" class="trash-btn btn btn-default btn-md" dataId='${course._id}'>trash</button>`;
+  var part3 = `</div>
+              </div>`;
+  var innerHTML;
+  $allCourses.prepend(part1+part2+part3);
   if ($currentId===course.teacher._id){
-    hiddenUnenroll = "hidden";
-    hiddenEnroll = "hidden";
+    innerHTML = part1 + part2 + teacherBtn + part3;
     $teachCourses.prepend(innerHTML);
   } else if (checkEnroll(course)){
-    hiddenEnroll = "hidden";
-    hiddenEdit = "hidden";
-    hiddenTrash = "hidden";
+    innerHTML = part1 + unenrollBtn + part2 + part3;
     $enrolledCourses.prepend(innerHTML);
   } else {
-    hiddenUnenroll = "hidden";
-    hiddenEdit = "hidden";
-    hiddenTrash = "hidden";
+    innerHTML = part1 + enrollBtn + part2 + part3;
     $availableCourses.prepend(innerHTML);
   }
 }
