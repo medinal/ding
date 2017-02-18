@@ -128,7 +128,7 @@ function renderAll(courses){
 
 function checkEnroll(course){
   for (i=0; i<enrollsArr.length; i++){
-    if(enrollsArr[i].user._id === $currentId){
+    if((enrollsArr[i].user._id === $currentId) && (course._id === enrollsArr[i].course._id)){
       return true;
     }
   }
