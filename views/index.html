@@ -24,8 +24,8 @@
       <h1>Ding! <small>how you level up</small></h1>
       <br>
 
-      <!-- Add Class Button -->
-      <button type="button" style="color: black" class="add-btn btn btn-lg btn-warning" name="" data-toggle="modal" data-target="#add-edit-modal">Add A Class</button>
+      <!-- Add Course Button -->
+      <button type="button" style="color: black" class="hidden add-btn btn btn-lg btn-warning" name="" data-toggle="modal" data-target="#add-modal">Add A Class</button>
 
       <!-- User Dropdown Menu -->
       <div class="btn-group">
@@ -38,24 +38,40 @@
     </div>
 
     <!-- Add Class Modal -->
-    <div class="modal" id="add-edit-modal" role="dialog">
+    <div class="modal fade" id="add-modal" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Add / Edit Course</h4>
+            <h4 class="modal-title">Add A Course</h4>
           </div>
-          <form class="add-class-form modal-form" action="index.html" method="post">
-          <form class="modal-form" method="post">
+          <form class="add-class modal-form" method="post">
             <input class="user-id" type="hidden" name="userId" value="">
-            <input type="text" name="className" value="" placeholder="course name">
+            <input type="text" name="name" value="" placeholder="course name">
             <input type="text" name="description" value="" placeholder="description">
             <input type="number" min='1' max='20' name="capacity" value="">
             <hr>
             <input class="btn btn-lg btn-success" type="submit" name="submit" value="Submit your Course!">
           </form>
-
         </div>
+      </div>
+    </div>
 
+    <!-- Edit Class Modal -->
+    <div class="modal fade" id="edit-modal" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Edit Your Course</h4>
+          </div>
+          <form class="edit-class modal-form" method="post">
+            <input class="course-id" type="hidden" name="courseId" value="" required>
+            <input type="text" name="name" value="" placeholder="course name" required>
+            <input type="text" name="description" value="" placeholder="description" required>
+            <input type="number" min='1' max='20' name="capacity" value="" required>
+            <hr>
+            <input class="btn btn-lg btn-primary" type="submit" name="submit" value="Change your Course!">
+          </form>
+        </div>
       </div>
     </div>
 
@@ -64,7 +80,7 @@
     <div id="accordion" role="tablist" aria-multiselectable="true" class="main-panel container-fluid panel">
 
 
-      <!-- accordion card one -->
+      <!-- All Courses ~ card one -->
       <div class="card">
         <div class="card-header" role="tab" id="headingOne">
           <h2 class="mb-0">
@@ -81,7 +97,7 @@
       </div>
 
 
-      <!-- accordian card two -->
+      <!-- Courses Teaching ~ card two -->
       <div class="card">
         <div class="card-header" role="tab" id="headingTwo">
           <h2 class="mb-0">
@@ -98,7 +114,7 @@
       </div>
 
 
-      <!-- accordion card three -->
+      <!-- Courses Available ~ card three -->
       <div class="card">
         <div class="card-header" role="tab" id="headingThree">
           <h2 class="mb-0">
@@ -116,7 +132,7 @@
 
 
 
-      <!-- accordion card four -->
+      <!-- Courses Enrolled ~ card four -->
       <div class="card">
         <div class="card-header" role="tab" id="headingFour">
           <h2 class="mb-0">

@@ -2,7 +2,6 @@ body {                    /*sanity check*/
   background: #968a6c;
 }
 
-
 h1, h2 {
   font-family: 'Pacifico', sans-serif;
   text-shadow: 2px 1px white;
@@ -79,7 +78,7 @@ footer {
   padding: 10px;
 }
 
-#main-panel {
+.main-panel {
   background-image: url('/images/paper.png');
   max-width: 90%;
 }

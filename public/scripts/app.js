@@ -1,3 +1,6 @@
+// client/dashboard ~ app.js
+
+// GLOBALS
 var allCoursesArr = [];
 var enrollsArr = [];
 
@@ -6,9 +9,12 @@ var $teachCourses;
 var $availableCourses;
 var $enrolledCourses;
 
-var $currentId = 0;
+var $currentId = null;
 
+// ON PAGE LOAD:
 $(document).ready(function(){
+
+  // divs grabbed with jQuery
   $everything = $('.everything');
   $allCourses = $('.all-courses');
   $teachCourses = $('.teach-courses');
@@ -27,30 +33,97 @@ $(document).ready(function(){
     error: onError
     });
 
-  $('#main-panel').on('click', '.enroll-btn', function(){
-    console.log("enroll!")
+  // SUBMIT A NEW CLASS
+  $('.add-class').on('submit', function(e){
+    e.preventDefault();
+    $('#add-modal').modal('toggle');
+    var data = $('.add-class').serialize();
+    $('.add-class')[0].reset();
+    $.ajax({
+      method: "POST",
+      url: "/courses",
+      data: data,
+      success: renderOne,
+      error: onError
+    });
+  });
+  // REMOVE A CLASS
+  $('.main-panel').on('click', '.trash-btn', function(){
+    var data = {courseId: $(this).data('id')};
+    $.ajax({
+      method: "DELETE",
+      url: "/courses",
+      data: data,
+      success: populateData,
+      error: onError
+    });
   })
 
-  $('#main-panel').on('click', '.edit-btn', function(){
-    console.log("Edit!!")
-  })
 
-  $('#main-panel').on('click', '.trash-btn', function(){
-    console.log("trash!")
+  // ENROLL IN A CLASS
+  $('.main-panel').on('click', '.enroll-btn', function(){
+    var thisId = $(this).data('id');
+    var data = {userId: $currentId,
+                courseId: thisId};
+    $.ajax({
+      method: "POST",
+      url: "/enrolls",
+      data : data,
+      success: populateData,
+      error: onError
+    });
   })
-
-  $('#main-panel').on('click', '.unenroll-btn', function(){
+  // UNENROLL FROM A CLASS
+  $('.main-panel').on('click', '.unenroll-btn', function(){
     console.log("unenroll!")
+    var thisId = $(this).data('id');
+    var data = {userId: $currentId,
+      courseId: thisId};
+      $.ajax({
+        method: "DELETE",
+        url: "/enrolls",
+        data : data,
+        success: populateData,
+        error: onError
+      });
+    })
+
+
+  // EDIT BUTTON EVENT LISTENER (SETS COURSE ID FOR MODAL)
+  $('.main-panel').on('click', '.edit-btn', function(){
+    var thisId = $(this).data('id');
+    $('.course-id').val(thisId);
+
+  });
+  // UPDATE A CLASS
+  $('.edit-class').on('submit', function(e){
+    e.preventDefault();
+    $('#edit-modal').modal('toggle');
+    var data = $('.edit-class').serialize();
+    $('.edit-class')[0].reset();
+    $.ajax({
+      method: "PUT",
+      url: "/courses",
+      data: data,
+      success: populateData,
+      error: onError
+    });
   })
 
+
+  // USER DROPDOWN MENU EVENT LISTENER (CHANGES USER ID ON USER SELECTION)
   $('.user-dropdown').on('click', '.dropdown-item', function(e){
     e.preventDefault();
+    $('.add-btn').removeClass('hidden');
     $('.everything').empty();
     $currentId = $(this).attr('data-id');
+    $('.user-id').val($currentId);
     populateData();
   });
 
 }); // closes $(document).ready()
+
+// FUNCTIONS OUTSIDE PAGE LOAD
 
 //render users to dropdown
 var renderUser = function(user){
@@ -58,6 +131,7 @@ var renderUser = function(user){
   <a class="dropdown-item" href="#" data-id="${user._id}">${user.name}</a>`)
 }
 
+// pulls important data from server & sends to render
 function populateData(){
   var counter = 0;
   $.ajax({
@@ -81,6 +155,7 @@ function populateData(){
   });
 }
 
+// renders a single course to views/index.html
 function renderOne(course){
   var part1 = `<hr>
               <div class="course-panel container-fluid">
@@ -95,8 +170,8 @@ function renderOne(course){
               <p><strong>Capacity:</strong>  ${course.capacity}</p>
               </div>
               <div class="btn-group class-btn-group">`;
-  var teacherBtn = `<button type="button" class="edit-btn btn btn-default btn-md" dataId='${course._id}'>edit</button>
-                    <button type="button" class="trash-btn btn btn-default btn-md" dataId='${course._id}'>trash</button>`;
+  var teacherBtn = `<button type="button" class="edit-btn btn btn-default btn-md" data-toggle="modal" data-target="#edit-modal" data-id='${course._id}'>edit</button>
+                    <button type="button" class="trash-btn btn btn-default btn-md" data-id='${course._id}'>trash</button>`;
   var part3 = `</div>
               </div>`;
   var innerHTML;
@@ -113,12 +188,15 @@ function renderOne(course){
   }
 }
 
+// renders all courses on AJAX response
 function renderAll(courses){
+  $('.everything').empty();
   courses.forEach(function(course){
       renderOne(course);
     })
   }
 
+// returns boolean if student IS enrolled in a class
 function checkEnroll(course){
   for (i=0; i<enrollsArr.length; i++){
     if((enrollsArr[i].user._id === $currentId) && (course._id === enrollsArr[i].course._id)){
@@ -127,10 +205,7 @@ function checkEnroll(course){
   }
 }
 
-function onSuccess(){
-  console.log("Yay!");
-}
-
+// on erroneous AJAX call
 function onError(){
   console.log("Oh No!");
 }
