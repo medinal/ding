@@ -139,6 +139,7 @@ $(document).ready(function(){
       <div class="course-panel container-fluid">
         <div class="course-title clearfix">
           <button class="enroll-btn btn btn-lg btn-danger" type="button" name="enroll" data-id="${res._id}">Enroll me</button>
+          <button class="unenroll-btn btn btn-lg btn-danger" type="button" name="unenroll" data-id="${res._id}">Unenroll me</button>
           <h3>${res.name}</h3>
           <br>
           <p><strong>Taught by:</strong>  ${res.teacher.name}</p>
