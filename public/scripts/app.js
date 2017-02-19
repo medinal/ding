@@ -130,7 +130,7 @@ $(document).ready(function(){
 
 }); // closes $(document).ready()
 
-// FUNCTIONS OUTSIDE PAGE LOAD
+// FUNCTIONS DECLARED OUTSIDE PAGE LOAD
 
 //render users to dropdown
 var renderUser = function(user){
@@ -169,7 +169,7 @@ function renderOne(course){
               <div class="course-title clearfix">
               <div>`;
   var enrollBtn = `<button class="enroll-btn btn btn-lg btn-success" type="button" name="enroll" data-id="${course._id}">Enroll me</button>`;
-  var courseFull = `<span>Course Full</span>`
+  var courseFull = `<img class="class-full-img" src="images/class_full.jpg" alt="Course Full!">`
   var unenrollBtn = `<button class="unenroll-btn btn btn-lg btn-danger" type="button" name="unenroll" data-id="${course._id}">Unenroll me</button>`;
   var part2 = `<h3>${course.name}</h3>
               <br>

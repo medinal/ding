@@ -82,3 +82,10 @@ footer {
   background-image: url('/images/paper.png');
   max-width: 90%;
 }
+
+.class-full-img {
+  max-width: 120px;
+  margin-top: 20px;
+  margin-left: 20px;
+  border: 2px dotted red;
+}
