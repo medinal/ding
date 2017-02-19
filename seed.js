@@ -49,20 +49,22 @@ courseList.push({
 
 db.Course.remove({}, function(err, courses){
   db.User.remove({}, function(err, courses){
-    db.User.create(userList, function(err, users){
-      courseList.forEach(function(courseData){
-        var course = new db.Course({
-          name: courseData.name,
-          description: courseData.description,
-          capacity: courseData.capacity,
-          spotsLeft: courseData.spotsLeft
-        });
-        db.User.findOne({name: courseData.teacher}, function (err, foundUser){
-          if(err){return console.log(err);}
-          course.teacher = foundUser;
-          course.save(function(err, savedCourse){
+    db.Enroll.remove({}, function(err,courses){
+      db.User.create(userList, function(err, users){
+        courseList.forEach(function(courseData){
+          var course = new db.Course({
+            name: courseData.name,
+            description: courseData.description,
+            capacity: courseData.capacity,
+            spotsLeft: courseData.spotsLeft
+          });
+          db.User.findOne({name: courseData.teacher}, function (err, foundUser){
             if(err){return console.log(err);}
-            return console.log('completed')
+            course.teacher = foundUser;
+            course.save(function(err, savedCourse){
+              if(err){return console.log(err);}
+              return console.log('completed')
+            })
           })
         })
       })
