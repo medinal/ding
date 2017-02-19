@@ -22,21 +22,20 @@
   </head>
   <body>
 
+    {{#if user}}
+    <div class="user" data-id={{ user._id }}></div>
+
+    <a  class="logout pull-right" href="/logout"><button type="button" class="btn btn-default">Log Out</button></a>
     <div class="container-fluid jumbotron page-header">
       <!-- Page Heading -->
       <h1>Ding! <small>how you level up</small></h1>
       <br>
 
       <!-- Add Course Button -->
-      <button type="button" style="color: black" class="hidden add-btn btn btn-lg btn-warning" name="" data-toggle="modal" data-target="#add-modal">Add A Class</button>
+      <button type="button" style="color: black" class="add-btn btn btn-lg btn-warning" name="" data-toggle="modal" data-target="#add-modal">Add A Class</button>
 
-      <!-- User Dropdown Menu -->
-      <div class="btn-group">
-        <button style="color: black" class="user-btn btn btn-lg btn-info dropdown-toggle" data-toggle="dropdown" type="button" name="button">Change User</button>
-        <div class="dropdown-menu user-dropdown">
-        </div>
-      </div>
-
+      <!-- User Greeting -->
+      <h1 class='text-center'><small>Hello, {{ user.name }}! How will you gain experience today?</small></h1>
 
     </div>
 
@@ -51,7 +50,7 @@
             <input class="user-id" type="hidden" name="userId" value="">
             <input type="text" name="name" value="" placeholder="course name">
             <input type="text" name="description" value="" placeholder="description">
-            <input type="number" min='1' max='20' name="capacity" value="">
+            <label for="capacity"><input type="number" min='1' max='20' name="capacity" value=""> <= Class capacity</label>
             <hr>
             <input class="btn btn-lg btn-success" type="submit" name="submit" value="Submit your Course!">
           </form>
@@ -68,9 +67,9 @@
           </div>
           <form class="edit-class modal-form" method="post">
             <input class="course-id" type="hidden" name="courseId" value="" required>
-            <input type="text" name="name" value="" placeholder="course name" required>
-            <input type="text" name="description" value="" placeholder="description" required>
-            <input class="course-capacity" type="number" min='' max='20' name="capacity" value="" required>
+            <input class="edit-course-name" type="text" name="name" value="" placeholder="course name" required>
+            <input class="edit-course-description" type="text" name="description" value="" placeholder="description" required>
+            <label for="capacity"><input class="course-capacity" type="number" min='' max='20' name="capacity" value="" required> <= Class capacity</label>
             <input class="spots-left" type="hidden" name="spotsLeft" value="" required>
             <hr>
             <input class="btn btn-lg btn-primary" type="submit" name="submit" value="Change your Course!">
@@ -153,6 +152,19 @@
       </div>
 
     </div>
+
+
+		{{else}}
+
+      <div class="container-fluid jumbotron page-header">
+        <!-- Page Heading -->
+        <h1>Ding! <small>how you level up</small></h1>
+        <br>
+        <a href="/auth/google"><img class='sign-in center-block' src="/images/btn_google_signin_light_focus_web@2x.png"></a>
+
+      </div>
+
+		{{/if}}
 
 
     <!-- Page Footer -->

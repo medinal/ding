@@ -21,21 +21,12 @@ $(document).ready(function(){
   $availableCourses = $('.available-courses');
   $enrolledCourses = $('.enrolled-courses');
 
-  // USER LIST AJAX
-  $.ajax({
-    method: "GET",
-    url: "/users",
-    success: function(users){
-      users.forEach(function(user){
-        renderUser(user);
-      })
-    },
-    error: onError
-    });
+  $currentId = $('.user').data('id')
 
   // SUBMIT A NEW CLASS
   $('.add-class').on('submit', function(e){
     e.preventDefault();
+    $('.user-id').val($currentId);
     $('#add-modal').modal('toggle');
     var data = $('.add-class').serialize();
     $('.add-class')[0].reset();
@@ -89,54 +80,47 @@ $(document).ready(function(){
     })
 
 
-  // EDIT BUTTON EVENT LISTENER (SETS COURSE ID FOR MODAL AND MIN CAPACITY)
-  $('.main-panel').on('click', '.edit-btn', function(){
-    var thisId = $(this).data('id');
-    var minCapacity = checkCapacity(thisId);
-    $('.course-capacity').attr("min", minCapacity);
-    $('.course-id').val(thisId);
-  });
-
-  // UPDATE A CLASS
-  $('.edit-class').on('submit', function(e){
-    e.preventDefault();
-    var newCapacity = $('.course-capacity').val()
-    var thisId = $('.course-id').val();
-    var numEnrolls = countEnroll(thisId);
-    $('.spots-left').val(newCapacity-numEnrolls);
-    $('#edit-modal').modal('toggle');
-    var data = $('.edit-class').serialize();
-    console.log(data);
-    $('.edit-class')[0].reset();
-    $.ajax({
-      method: "PUT",
-      url: "/courses",
-      data: data,
-      success: populateData,
-      error: onError
+    // EDIT BUTTON EVENT LISTENER (SETS COURSE ID FOR MODAL AND MIN CAPACITY)
+    $('.main-panel').on('click', '.edit-btn', function(){
+      var thisId = $(this).data('id');
+      var course = allCoursesArr.find(function(course){
+                    return (thisId === course._id);
+                  });
+      $('.edit-course-name').val(course.name);
+      $('.edit-course-description').val(course.description);
+      $('.course-capacity').val(course.capacity);
+      var minCapacity = checkCapacity(thisId);
+      $('.course-capacity').attr("min", minCapacity);
+      $('.course-id').val(thisId);
     });
-  })
 
+    // UPDATE A CLASS
+    $('.edit-class').on('submit', function(e){
+      e.preventDefault();
+      var newCapacity = $('.course-capacity').val()
+      var thisId = $('.course-id').val();
+      var numEnrolls = countEnroll(thisId);
+      $('.spots-left').val(newCapacity-numEnrolls);
+      $('#edit-modal').modal('toggle');
+      var data = $('.edit-class').serialize();
+      $('.edit-class')[0].reset();
+      $.ajax({
+        method: "PUT",
+        url: "/courses",
+        data: data,
+        success: populateData,
+        error: onError
+      });
+    })
 
   // USER DROPDOWN MENU EVENT LISTENER (CHANGES USER ID ON USER SELECTION)
-  $('.user-dropdown').on('click', '.dropdown-item', function(e){
-    e.preventDefault();
-    $('.add-btn').removeClass('hidden');
-    $('.everything').empty();
-    $currentId = $(this).attr('data-id');
-    $('.user-id').val($currentId);
+  $('#accordion').ready(function(){
     populateData();
   });
 
 }); // closes $(document).ready()
 
 // FUNCTIONS OUTSIDE PAGE LOAD
-
-//render users to dropdown
-var renderUser = function(user){
-  $('.user-dropdown').append(`
-  <a class="dropdown-item" href="#" data-id="${user._id}">${user.name}</a>`)
-}
 
 // pulls important data from server & sends to render
 function populateData(){
@@ -169,7 +153,7 @@ function renderOne(course){
               <div class="course-title clearfix">
               <div>`;
   var enrollBtn = `<button class="enroll-btn btn btn-lg btn-success" type="button" name="enroll" data-id="${course._id}">Enroll me</button>`;
-  var courseFull = `<span>Course Full</span>`
+  var courseFull = `<img class="class-full-img" src="images/class_full.jpg" alt="Course Full!">`
   var unenrollBtn = `<button class="unenroll-btn btn btn-lg btn-danger" type="button" name="unenroll" data-id="${course._id}">Unenroll me</button>`;
   var part2 = `<h3>${course.name}</h3>
               <br>
