@@ -75,7 +75,6 @@ $(document).ready(function(){
   })
   // UNENROLL FROM A CLASS
   $('.main-panel').on('click', '.unenroll-btn', function(){
-    console.log("unenroll!")
     var thisId = $(this).data('id');
     var data = {userId: $currentId,
       courseId: thisId};
@@ -92,6 +91,12 @@ $(document).ready(function(){
   // EDIT BUTTON EVENT LISTENER (SETS COURSE ID FOR MODAL AND MIN CAPACITY)
   $('.main-panel').on('click', '.edit-btn', function(){
     var thisId = $(this).data('id');
+    var course = allCoursesArr.find(function(course){
+                  return (thisId===course._id);
+                });
+    $('.edit-course-name').val(course.name);
+    $('.edit-course-description').val(course.description);
+    $('.course-capacity').val(course.capacity);
     var minCapacity = checkCapacity(thisId);
     $('.course-capacity').attr("min", minCapacity);
     $('.course-id').val(thisId);
@@ -106,7 +111,6 @@ $(document).ready(function(){
     $('.spots-left').val(newCapacity-numEnrolls);
     $('#edit-modal').modal('toggle');
     var data = $('.edit-class').serialize();
-    console.log(data);
     $('.edit-class')[0].reset();
     $.ajax({
       method: "PUT",
