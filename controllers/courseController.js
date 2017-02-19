@@ -15,7 +15,8 @@ function create(req, res){
   var newCourse = {name: req.body.name,
                   teacher: req.body.userId,
                   description: req.body.description,
-                  capacity: req.body.capacity};
+                  capacity: req.body.capacity,
+                  spotsLeft: req.body.capacity};
   db.Course.create(newCourse, function(err, course){
     if(err){console.log(err);}
     db.Course.findById(course._id)
@@ -32,7 +33,8 @@ function edit(req, res){
   var courseId = req.body.courseId;
   var updatedCourse = {name: req.body.name,
                   description: req.body.description,
-                  capacity: req.body.capacity};
+                  capacity: req.body.capacity,
+                  spotsLeft: req.body.spotsLeft};
   db.Course.findByIdAndUpdate(courseId, updatedCourse, {new: true}, function(err, course){
     if(err){console.log(err);}
     db.Course.findById(course._id)

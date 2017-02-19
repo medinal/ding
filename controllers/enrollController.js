@@ -27,23 +27,27 @@ function allOne(req, res){
 function create(req, res){
   var newEnrollment = {course: req.body.courseId,
                       user: req.body.userId};
-  db.Enroll.create(newEnrollment, function(err, enroll){
-    if(err){console.log(err);}
-    db.Enroll.findById(enroll._id)
+  db.Course.findByIdAndUpdate(req.body.courseId, {$inc: {spotsLeft: -1}}, function(err, course){
+    db.Enroll.create(newEnrollment, function(err, enroll){
+      if(err){console.log(err);}
+      db.Enroll.findById(enroll._id)
       .populate(['course','user'])
       .exec(function(err, enroll){
         if(err){console.log(err);}
         res.json(enroll);
       })
+    })
   })
 };
 
 //un-enroll a student from a course by student id and course id
 function unenroll(req, res){
-  db.Enroll.find({user: {_id: req.body.userId}, course: {_id: req.body.courseId}}, function(err, enrollment){
-    db.Enroll.findByIdAndRemove(enrollment[0]._id, function(err, unenroll){
-      if(err){console.log(err);}
-      res.json(unenroll);
+  db.Course.findByIdAndUpdate(req.body.courseId, {$inc: {spotsLeft: 1}}, function(err, course){
+    db.Enroll.find({user: {_id: req.body.userId}, course: {_id: req.body.courseId}}, function(err, enrollment){
+      db.Enroll.findByIdAndRemove(enrollment[0]._id, function(err, unenroll){
+        if(err){console.log(err);}
+        res.json(unenroll);
+      })
     })
   })
 }

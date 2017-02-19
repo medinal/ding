@@ -10,7 +10,8 @@ var CourseSchema = new Schema({
     ref: 'User',
   },
   description: String,
-  capacity: Number
+  capacity: Number,
+  spotsLeft: Number
 });
 
 var Course = mongoose.model('Course', CourseSchema);
