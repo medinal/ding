@@ -45,7 +45,9 @@ History
 
 Logan Medina
 Will Kaspar
+
 props to Nathan Allen & Michelle Ferreirae for teaching us all the things!
+
 we stole full_class.jpg off of Google.
 
 ##License
