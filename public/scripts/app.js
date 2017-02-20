@@ -34,7 +34,7 @@ $(document).ready(function(){
       method: "POST",
       url: "/courses",
       data: data,
-      success: renderOne,
+      success: populateData,
       error: onError
     });
   });
