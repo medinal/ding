@@ -43,7 +43,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(session({
-  secret: 'keyboard cat',
+  secret: '6C9B9441475A96128747C376882CD',
   resave: false,
   saveUninitialized: false,
   unset: 'destroy'
