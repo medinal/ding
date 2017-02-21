@@ -10,6 +10,8 @@ var CourseSchema = new Schema({
     ref: 'User',
   },
   description: String,
+  isTeacher: {type: Boolean, default: false},
+  isEnroll: {type: Boolean, default: false},
   capacity: Number,
   spotsLeft: Number
 });

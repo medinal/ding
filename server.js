@@ -121,17 +121,15 @@ app.delete('/courses', ensureAuthenticated, controllers.course.remove);
 //*User Routes*
 //***************
 
-//get all user data
-app.get('/users', ensureAuthenticated, controllers.user.all);
 //create a new user
 app.post('/users', controllers.user.create);
 
 
-//***************
-//*Enroll Routes*
-//***************
+// //***************
+// //*Enroll Routes*
+// //***************
 
-//get all enrollment for every user
+// //get all enrollment for every user
 app.get('/enrolls', ensureAuthenticated, controllers.enroll.all);
 app.post('/enrolls', ensureAuthenticated, controllers.enroll.create);
 app.delete('/enrolls', ensureAuthenticated, controllers.enroll.unenroll);

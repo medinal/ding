@@ -2,7 +2,6 @@
 
 // GLOBALS
 var allCoursesArr = [];
-var enrollsArr = [];
 
 var $allCourses;
 var $teachCourses;
@@ -66,7 +65,6 @@ $(document).ready(function(){
   })
   // UNENROLL FROM A CLASS
   $('.main-panel').on('click', '.unenroll-btn', function(){
-    console.log("unenroll!")
     var thisId = $(this).data('id');
     var data = {userId: $currentId,
       courseId: thisId};
@@ -99,8 +97,6 @@ $(document).ready(function(){
       e.preventDefault();
       var newCapacity = $('.course-capacity').val()
       var thisId = $('.course-id').val();
-      var numEnrolls = countEnroll(thisId);
-      $('.spots-left').val(newCapacity-numEnrolls);
       $('#edit-modal').modal('toggle');
       var data = $('.edit-class').serialize();
       $('.edit-class')[0].reset();
@@ -125,26 +121,26 @@ $(document).ready(function(){
 // pulls important data from server & sends to render
 function populateData(){
   var counter = 0;
-  $.ajax({
-    method: "GET",
-    url: "/enrolls",
-    success: function(enrolls){
-      enrollsArr = [];
-      enrollsArr =enrolls;
-      $.ajax({
-        method: "GET",
-        url: "/courses",
-        success: function(courses){
-          allCoursesArr = [];
-          allCoursesArr = courses;
-          renderAll(allCoursesArr);
-        },
-        error: onError
-      });
-    },
-    error: onError
-  });
-}
+  var data = {
+    userId: $currentId
+  }
+    $.ajax({
+      method: "GET",
+      url: "/courses",
+      data: data,
+      success:
+      function(courses){
+        courses.forEach(function(course){
+          delete course.teacher._id
+        })
+        allCoursesArr = [];
+        allCoursesArr = courses;
+        renderAll(allCoursesArr);
+      },
+      error: onError
+    });
+  };
+
 
 // renders a single course to views/index.html
 function renderOne(course){
@@ -168,11 +164,11 @@ function renderOne(course){
   var part3 = `</div>
               </div>`;
   var innerHTML;
-  if ($currentId===course.teacher._id){
+  if (course.isTeacher){
     innerHTML = part1 + part2 + teacherBtn + part3;
     $teachCourses.prepend(innerHTML);
     $allCourses.prepend(innerHTML);
-  } else if (checkEnroll(course)){
+  } else if (course.isEnroll){
     innerHTML = part1 + unenrollBtn + part2 + part3;
     $enrolledCourses.prepend(innerHTML);
     $allCourses.prepend(innerHTML);
@@ -195,15 +191,6 @@ function renderAll(courses){
     })
   }
 
-// returns boolean if student IS enrolled in a class
-function checkEnroll(course){
-  for (i=0; i<enrollsArr.length; i++){
-    if((enrollsArr[i].user._id === $currentId) && (course._id === enrollsArr[i].course._id)){
-      return true;
-    }
-  }
-}
-
 // checks if a course is full or newEnrollment
 function checkFull(course){
   if(course.spotsLeft === 0){
@@ -220,15 +207,6 @@ function checkCapacity(courseId){
   return minVal;
 }
 
-function countEnroll(courseId){
-  var course = allCoursesArr.find(function(course){
-    return (courseId===course._id);
-  })
-  var enrollments = enrollsArr.filter(function(enroll){
-    return (enroll.course._id === course._id);
-  })
-  return enrollments.length;
-};
 
 // on erroneous AJAX call
 function onError(){
